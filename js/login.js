@@ -2,7 +2,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     event.preventDefault(); // Prevent the default form submission
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    console.log('test');
 
     const result = await fetch('http://localhost:3000/login', {
         method: 'POST',
@@ -10,6 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include', // This is crucial
     })
     .then(response => response.json())
         if (result.success) {

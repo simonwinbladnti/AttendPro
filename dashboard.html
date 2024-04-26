@@ -10,11 +10,9 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Attendance</a></li>
-                <li><a href="#">Students</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="students.html">Students</a></li>
             </ul>
         </nav>
         <div id="user-info">
@@ -22,12 +20,25 @@
         </div>
     </header>
     <main>
-        <section id="general-info">
-            <h2>General Information</h2>
-            <p>Welcome to the School Attendance Dashboard.</p>
-            <!-- Add more general information here -->
+        <section id="today-date">
+            <h2>Today's Date</h2>
+            <p id="current-date"></p>
         </section>
+        <div class="flex-container">
+            <section id="schedule">
+                <h2>Schedule</h2>
+                <div class="schedule-day">
+                    <h3>Monday</h3>
+                    <p>Mathematics</p>
+                    <p>English</p>
+                </div>
+            </section>
+            <section id="announcements">
+                <h2>Announcements</h2>
+                <p>No announcements at this time.</p>
+            </section>
+        </div>
     </main>
-    <script src="js/script.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

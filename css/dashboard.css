@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #203c8e;
     color: white;
     padding: 10px;
     display: flex;
@@ -39,4 +39,46 @@ main {
 
 #general-info {
     margin-top: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+#today-date, #schedule, #announcements {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.262);
+}
+
+#schedule, #announcements {
+    margin-top: 20px;
+    width: 40%;
+}
+
+.schedule-day {
+    margin-bottom: 10px;
+}
+
+/* Modern blue theme */
+h2 {
+    color: #007bff;
+}
+
+/* Additional styling for a nice layout */
+.schedule-day h3 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.schedule-day p {
+    margin-bottom: 5px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
 }
