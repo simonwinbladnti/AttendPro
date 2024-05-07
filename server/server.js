@@ -65,6 +65,63 @@ app.post('/students', async function (req, res) {
     }
 });
 
+app.post('/add-attendance', async function (req, res) {
+    const connection = await connectToDatabase();
+    const { id, time } = req.body;
+
+    if (!id || !time) {
+        return res.json({ success: false, message: "id and time are required" });
+    }
+
+    const updateSql = "UPDATE users SET totaltime = totaltime + ? WHERE id = ?";
+    const [updateResult] = await connection.execute(updateSql, [time, id]);
+
+    if (updateResult.affectedRows > 0) {
+        const selectSql = "SELECT username, totaltime FROM users WHERE id = ?";
+        const [rows] = await connection.execute(selectSql, [id]);
+
+        if (rows.length > 0) {
+            const userData = { username: rows[0].username, totaltime: rows[0].totaltime }; 
+            return res.json({ success: true, userData: userData }); 
+        } else {
+            return res.json({ success: false, message: "User not found" });
+        }
+    } else {
+        return res.json({ success: false, message: "Failed to update total time" });
+    }
+});
+
+app.post('/add-user', async function (req, res) {
+    const connection = await connectToDatabase();
+    const { name, surname, username, password, type } = req.body;
+
+    if (!name || !surname || !username || !password || !type) {
+        return res.json({ success: false, message: "All fields are required" });
+    }
+
+    try {
+        const [lastIdRows] = await connection.execute("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+        let lastId = 0;
+        if (lastIdRows.length > 0) {
+            lastId = lastIdRows[0].id;
+        }
+
+        const newId = lastId + 1;
+
+        const insertSql = "INSERT INTO users (id, username, password, name, surname, type) VALUES (?, ?, ?, ?, ?, ?)";
+        const [insertResult] = await connection.execute(insertSql, [newId, username, password, name, surname, type]);
+
+        if (insertResult.affectedRows > 0) {
+            return res.json({ success: true, message: "User added successfully" });
+        } else {
+            return res.json({ success: false, message: "Failed to add user" });
+        }
+    } catch (error) {
+        console.error('Error adding user:', error);
+        return res.status(500).json({ success: false, message: "An error occurred while adding user" });
+    }
+});
+
 
 
 app.listen(3000)
