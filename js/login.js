@@ -1,5 +1,5 @@
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -9,12 +9,22 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
-        credentials: 'include', // This is crucial
+        credentials: 'include', 
     })
     .then(response => response.json())
         if (result.success) {
-            window.location.href = '/dashboard.html'; // Example redirect
+            window.location.href = '/dashboard.html';
         } else {
             alert('Login failed');
         }
+
+            const navItemsToRemove = document.querySelectorAll('nav ul li');
+    
+    if (userType != 'admin') {
+        navItemsToRemove.forEach(item => {
+            if (item.textContent.includes('Students') || item.textContent.includes('Attendance')) {
+                item.parentNode.removeChild(item);
+            }
+        });
+    }
 });

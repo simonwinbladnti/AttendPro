@@ -7,6 +7,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/login.html'; 
     }
 
+    let userType = getCookie('userType'); 
+    const navItemsToRemove = document.querySelectorAll('nav ul li');
+    
+    if (userType != 'admin') {
+        navItemsToRemove.forEach(item => {
+            if (item.textContent.includes('Students') || item.textContent.includes('Attendance')) {
+                item.parentNode.removeChild(item);
+            }
+            window.location.href = 'dashboard.html';
+        });
+    }
+
     const response = await fetch('http://localhost:3000/students', {
         method: 'POST',
         headers: {
@@ -26,7 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const nameCell = document.createElement('td');
             const attendanceCell = document.createElement('td');
             const addButton = document.createElement('td'); 
-
+            const removeButton = document.createElement('td'); 
+            
             idCell.textContent = index + 1;
             nameCell.textContent = userData.username;
             attendanceCell.textContent = formatTime(userData.totaltime);
@@ -59,27 +72,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                     }
                 }
-            });            
+            }); 
+            
 
-            // Append cells and button to row
             newRow.appendChild(idCell);
             newRow.appendChild(nameCell);
             newRow.appendChild(attendanceCell);
-            newRow.appendChild(addButton); // Append the Add Attendance button
-
-            // Append row to table body
+            newRow.appendChild(addButton); 
             studentsTableBody.appendChild(newRow);
         });
     } else {
         console.error('Failed to fetch usernames:', data.message);
     }
+    
 });
 
 const addUserBtn = document.getElementById('addUserBtn');
 addUserBtn.addEventListener('click', () => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
-
+    popup.id = 'popup';
+    
     const form = document.createElement('form');
     form.innerHTML = `
         <label for="firstName">First Name:</label>
@@ -134,6 +147,12 @@ addUserBtn.addEventListener('click', () => {
     popup.appendChild(form);
 
     document.body.appendChild(popup);
+        
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            popup.remove();
+        }
+    });
 });
 
 function getCookie(name) {
@@ -149,3 +168,4 @@ function formatTime(seconds) {
 
     return `${hours > 0 ? `${hours}h ` : ''}${minutes > 0 ? `${minutes}m ` : ''}${remainingSeconds > 0 ? `${remainingSeconds}s` : ''}`.trim();
 }
+

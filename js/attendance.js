@@ -6,6 +6,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         window.location.href = '/login.html'; 
     }
+    let userType = getCookie('userType'); 
+    const navItemsToRemove = document.querySelectorAll('nav ul li');
+    
+    if (userType != 'admin') {
+        navItemsToRemove.forEach(item => {
+            if (item.textContent.includes('Students') || item.textContent.includes('Attendance')) {
+                item.parentNode.removeChild(item);
+            }
+            window.location.href = 'dashboard.html'; 
+        });
+    }
 
 
     const response = await fetch('http://localhost:3000/students', {

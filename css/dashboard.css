@@ -45,14 +45,14 @@ section {
     margin-bottom: 20px;
 }
 
-#today-date, #schedule, #announcements {
+#today-date, #schedule, #attendance {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.262);
 }
 
-#schedule, #announcements {
+#schedule, #attendance {
     margin-top: 20px;
     width: 40%;
 }
